@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LoggingLevel>2</LoggingLevel>
+  <WatchedProcessesList>
+ 
+    <WatchedProcessInfo>
+      <ProcessPath>C:\Windows\system32\notepad.exe</ProcessPath>
+      <CommandLineParams>C:\Temp\aaa.txt</CommandLineParams>
+      <ShouldBeWatched>true</ShouldBeWatched>
+      <ProcessAlias>Notepad aaa.txt</ProcessAlias>
+    </WatchedProcessInfo>
+ 
+    <WatchedProcessInfo>
+      <ProcessPath>C:\Program Files\Internet Explorer\iexplore.exe</ProcessPath>
+      <CommandLineParams>-k www.microsoft.com</CommandLineParams>
+      <ShouldBeWatched>true</ShouldBeWatched>
+      <ProcessAlias>IE Microsoft</ProcessAlias>
+    </WatchedProcessInfo>
+ 
+  </WatchedProcessesList>
+</Settings>
