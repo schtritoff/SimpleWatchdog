@@ -7,6 +7,7 @@ using System.ServiceProcess;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
+using System.Runtime.InteropServices;
 
 // Application may run as exe or as windows service.
 // It is designed to run and watchdog other applications.
@@ -48,6 +49,17 @@ namespace SimpleWatchdog
         }
         #endregion
 
+        #region Imports needed for daemonizing the program
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        const int SW_HIDE = 0;
+        const int SW_SHOW = 5;
+        #endregion
+
         static void Main(string[] args)
         {
             // Paths of log and settings files - in the same folder where exe is located, for demo simplicity
@@ -79,6 +91,7 @@ namespace SimpleWatchdog
                     Console.WriteLine("Designed to run muiltiple applications reliably (run + watchdog + restart if failed).");
                     Console.WriteLine();
                     Console.WriteLine("May be executed as standalone application or as a service.");
+                    Console.WriteLine("When run as standalone console application you can use argument '--daemonize' to hide console window.");
                     Console.WriteLine();
                     Console.WriteLine("List of applications and their command line parameters should be located in XML file " + settingsFilePath);
                     Console.WriteLine();
@@ -108,6 +121,13 @@ namespace SimpleWatchdog
                     return;
                 }
                 #endregion HELP
+
+                // daemonize, src: https://stackoverflow.com/a/38221518/1155121
+                if (args.Length > 0 && (args[0] == "--daemonize"))
+                {
+                    var handle = GetConsoleWindow();
+                    ShowWindow(handle, SW_HIDE);
+                }
 
                 // running as console app
                 Start(args);
